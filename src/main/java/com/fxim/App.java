@@ -18,7 +18,7 @@ public class App {
             Double x = iteracao(scanner, expressao);
             System.out.println("Valor de x: " + x);
             lerCondicao = ReadLineUtils.lerCondicao(scanner);
-        } while (!lerCondicao.equals("!close"));
+        } while (!lerCondicao.trim().equals("!close"));
 
         scanner.close();
         return;
@@ -41,13 +41,9 @@ public class App {
         do {
             Double fa = calculaFuncao(expressao, a);
             Double fb = calculaFuncao(expressao, b);
-            if(fa == 0){
-                x = a;
-                break;
-            }
 
-            if(fb == 0){
-                x = b;
+            if(fa == 0 || fb == 0){
+                x = fa == 0 ? a : b;
                 break;
             }
 

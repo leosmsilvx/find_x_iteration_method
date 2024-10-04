@@ -18,7 +18,7 @@ public class ReadLineUtils {
     }
 
     public static String lerCondicao(Scanner scn){        
-        System.out.print("Digite !close para finalizar: ");
+        System.out.print("Digite '!close' para finalizar: ");
         String close = scn.nextLine();
         close = scn.nextLine();
         return close;
