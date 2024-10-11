@@ -9,8 +9,10 @@ public class ReadLineUtils {
 
     public static Expression lerExpressao(Scanner scn){
         String strExpressao = scn.nextLine();
-
-        Expression expressao = new ExpressionBuilder(strExpressao)
+        if(strExpressao.isEmpty()){
+            return null;
+        }
+        Expression expressao = new ExpressionBuilder(strExpressao.trim())
             .variables("x")
             .build();
 
@@ -22,5 +24,14 @@ public class ReadLineUtils {
         String close = scn.nextLine();
         close = scn.nextLine();
         return close;
+    }
+    
+    public static Double getErrorExpression(Scanner scn, Double erro){
+        System.out.println("Digite o valor do erro: ");
+        Expression expErro = lerExpressao(scn);
+        if(expErro == null){
+            return erro;
+        }
+        return expErro.evaluate();
     }
 }

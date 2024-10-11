@@ -14,8 +14,10 @@ public class App {
         System.out.print("Digite a expressao (1 variavel: X): ");
         Expression expressao = ReadLineUtils.lerExpressao(scanner);
         String lerCondicao = null;
+        Double erro = 0.1;
         do {
-            Double x = iteracao(scanner, expressao);
+            erro = ReadLineUtils.getErrorExpression(scanner, erro);
+            Double x = iteracao(scanner, expressao, erro);
             System.out.println("Valor de x: " + x);
             lerCondicao = ReadLineUtils.lerCondicao(scanner);
         } while (!lerCondicao.trim().equals("!close"));
@@ -24,12 +26,8 @@ public class App {
         return;
     }    
 
-    private static Double iteracao(Scanner scanner, Expression expressao){
+    private static Double iteracao(Scanner scanner, Expression expressao, Double erro){        
         System.out.println("Calculando iteracao");
-        System.out.println("Digite o valor do erro: ");
-        Expression expErro = ReadLineUtils.lerExpressao(scanner);
-        Double erro = expErro.evaluate();
-        
         System.out.println("Digite o valor do a: ");
         Double a = scanner.nextDouble();
         System.out.println("Digite o valor do b: ");            
@@ -37,8 +35,11 @@ public class App {
 
         Double x = 0.0;
 
+        int ite = 0;
+
         Long startTime = System.nanoTime();
         do {
+            ite++;
             Double fa = calculaFuncao(expressao, a);
             Double fb = calculaFuncao(expressao, b);
 
@@ -53,17 +54,19 @@ public class App {
 
             x = (a+b)/2;
             Double fx = calculaFuncao(expressao, x);
-
+            
+            StringBuilder strBuilder = new StringBuilder("X").append(ite).append(": ").append(x);
+            System.out.println(strBuilder);
             if(fa * fx < 0){
                 b = x;
             } else {
                 a = x;
             }
-            
         } while (erro < Math.abs(b-a));   
         Long endTime = System.nanoTime();
         Double time = (endTime-startTime)/1000000.0;
         System.out.println("Tempo de funcao: " + time + "ms");
+        System.out.println("Numero de iteracoes: " + ite);
         return x;
     }
 
@@ -71,4 +74,5 @@ public class App {
         expressao.setVariable("x", x);
         return expressao.evaluate();
     }
+
 }
