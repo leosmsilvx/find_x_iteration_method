@@ -28,21 +28,22 @@ public class App {
 
     private static Double iteracao(Scanner scanner, Expression expressao, Double erro){        
         System.out.println("Calculando iteracao");
+
         System.out.println("Digite o valor do a: ");
         Double a = scanner.nextDouble();
         System.out.println("Digite o valor do b: ");            
         Double b = scanner.nextDouble();
 
-        Double x = 0.0;
-
+        Double x = null;
         int ite = 0;
 
         Long startTime = System.nanoTime();
         do {
             ite++;
+
             Double fa = calculaFuncao(expressao, a);
             Double fb = calculaFuncao(expressao, b);
-
+            
             if(fa == 0 || fb == 0){
                 x = fa == 0 ? a : b;
                 break;
@@ -57,6 +58,7 @@ public class App {
             
             StringBuilder strBuilder = new StringBuilder("X").append(ite).append(": ").append(x);
             System.out.println(strBuilder);
+
             if(fa * fx < 0){
                 b = x;
             } else {
@@ -71,8 +73,6 @@ public class App {
     }
 
     private static Double calculaFuncao(Expression expressao, Double x){
-        expressao.setVariable("x", x);
-        return expressao.evaluate();
+        return expressao.setVariable("x", x).evaluate();
     }
-
 }
